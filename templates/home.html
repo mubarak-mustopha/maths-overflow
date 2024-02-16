@@ -7,6 +7,7 @@
     {% else %}
         <p>Anonymous dude, what's good?</p>
     {% endif %}
+    <p>Need maths help?<a href="{% url 'posts' %}"> Go to the Posts page</a></p>
     <h2>Recent Activities</h2>
     <div>
         {% for action in actions %}
@@ -16,6 +17,5 @@
             {% endif %}
         {% endfor %}
     </div>
-    <p>Need maths help?<a href="{% url 'posts' %}"> Go to the Posts page</a></p>
 
 {% endblock %}
