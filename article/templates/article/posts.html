@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block search-bar %}
+    <form action="{% url 'posts' %}" method="GET">
+        <input type="search" name="q" id="" placeholder="Search post..." class="form-control">
+    </form>
+{% endblock search-bar %}
+
+{% block content %}
+
+    <p><a href="{% url 'create-post' %}">+Create New Post</a></p>    
+
+    {% if q != "" %}
+        <p>Posts filtered by "{{q}}"</p>
+        <p><a href="{% url 'posts' %}">Clear filter</a></p>
+    {% endif %}
+
+    {% for post in posts %}
+    
+        {% include 'article/post-component.html' %}
+        <a href="{% url 'post-detail' post.id %}"> View Post</a>
+        <hr>
+    {% endfor %}
+
+{% endblock %}

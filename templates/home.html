@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <p>Welcome to Maths OverFlow {{request.user.username}}</p>
+    {% else %}
+        <p>Anonymous dude, what's good?</p>
+    {% endif %}
+    <h2>Recent Activities</h2>
+    <div>
+        {% for action in actions %}
+            {% if action.user != request.user %}
+                <p>{{action.user}} {{action.verb}} "{{action.target.text}}"</p>
+                <p><a href="{{ action.target.get_absolute_url }}">Check Out</a></p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <p>Need maths help?<a href="{% url 'posts' %}"> Go to the Posts page</a></p>
+
+{% endblock %}

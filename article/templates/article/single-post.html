@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+        .comments {
+            margin-left: 50px;
+        }
+    </style>
+    <h1>Post</h1>
+
+    {% include 'article/post-component.html' %}
+
+    {% if request.user == post.user %}
+        <div class="action-btns">
+            <a href="{% url 'edit-post' post.id %}">Edit</a>
+            <a href="{% url 'delete-post' post.id %}">Delete</a>
+        </div>
+    {% endif %}
+    <hr>
+
+    <div class="comments">
+        <h2>Comments</h2>
+        {% for comment in post.comment_set.all %}
+            <img src="{{comment.author.avatar.url}}" alt="" 
+            style="width: 50px;height: 50px;"
+            class="rounded-pill object-fit-cover" >@{{comment.author}}
+            <p>{{comment.text}}</p>
+            {% if comment.photo %}
+                <a href="{{comment.photo.url}}"><img src="{{comment.photo.url}}" alt=""></a>
+            {% endif %}    
+            <p>
+                posted by @{{comment.author}} {{comment.created|timesince}} ago
+            </p>
+            {% if request.user == comment.author %}
+                <div class="action-btns">
+                    <a href="{% url 'edit-comment' comment.id %}">Edit</a>
+                    <a href="{% url 'delete-comment' comment.id %}">Delete</a>
+                </div>
+            {% endif %}
+            <hr>
+        {% endfor %}
+        <a href="{% url 'create-comment' post.id %}">Add Comment</a>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{title}}</h2>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        <div class="mb-3">
+            <label for="text" class="form-label">Text</label>
+            <textarea name="text" class="form-control" id="text" value="{{form.text}}"> </textarea>
+         </div>
+
+        <div class="mb-3"> 
+            <label for="photo" class="form-label">Photo:</label>
+            {% if photo %}
+                Currently: <a href="{{photo.url}}">{{photo.name}}</a>
+                <div class="form-check">
+                    <input type="checkbox" name="photo-clear" id="photo-clear" class="form-check-input" >
+                    <label for="photo-clear" class="form-check-label">Delete Current Photo</label> 
+                <div>
+                OR
+                <br>
+                Change: 
+            {% endif %}
+            <input accept="image/" class="form-control" type="file" name="photo" id="photo" > 
+        </div>
+        <input type="submit" value="Submit" class="btn btn-success">
+    </form>
+{% endblock content %}
